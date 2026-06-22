@@ -26,7 +26,7 @@ export default function Footer() {
           </ul>
         </div>
         <div className="col-span-12 border-t border-outline-variant pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-label-mono text-label-mono text-on-surface-variant opacity-60">© 2024 Perspec Agency. All rights reserved.</p>
+          <p className="font-label-mono text-label-mono text-on-surface-variant opacity-60">© 2026 Perspec Agency. All rights reserved.</p>
           <div className="flex gap-8">
             <Link className="font-label-mono text-label-mono text-on-surface-variant hover:text-on-surface transition-colors" to="/privacy">Privacy Policy</Link>
             <Link className="font-label-mono text-label-mono text-on-surface-variant hover:text-on-surface transition-colors" to="/terms">Terms of Service</Link>

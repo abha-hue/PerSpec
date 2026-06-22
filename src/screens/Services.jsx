@@ -15,11 +15,11 @@ export default function Services() {
     if (!section) return;
     const img = section.querySelector('.bg-cover');
     if (!img) return;
-    
+
     const rect = section.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
-    
+
     img.style.transform = `scale(1.05) translate(${(x - 0.5) * 20}px, ${(y - 0.5) * 20}px)`;
   };
 
@@ -38,7 +38,7 @@ export default function Services() {
           Capabilities
         </span>
         <h1 className="font-display-hero text-[80px] lg:text-[140px] leading-[0.9] text-on-surface mb-12 uppercase tracking-tighter">
-          Systematic <br/>
+          Systematic <br />
           <span className="italic font-light text-outline">Creativity</span>
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
@@ -50,12 +50,12 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Strategy Section */}
-      <section 
-        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap" 
-        id="strategy"
+      {/* Automation Section */}
+      <section
+        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap"
+        id="automation"
       >
-        <div 
+        <div
           className="grid grid-cols-12 gap-gutter group"
           ref={ref0}
           onMouseMove={(e) => handleMouseMove(e, 0)}
@@ -65,24 +65,24 @@ export default function Services() {
             <div className="flex flex-col md:flex-row justify-between gap-12">
               <div className="md:w-1/2">
                 <div className="flex items-center gap-4 mb-8">
-                  <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>account_tree</span>
-                  <h2 className="font-headline-lg text-headline-lg">Strategy</h2>
+                  <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                  <h2 className="font-headline-lg text-headline-lg">Automation</h2>
                 </div>
                 <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
-                  The architecture of a brand starts here. We dismantle your core challenge, audit the landscape, and forge a positioning that is unignorable. Data informs the direction; intuition drives the leap.
+                  Streamline your workflows and engage customers automatically. We design smart, scalable automation systems across messaging, email, and CRM that save time and drive conversions.
                 </p>
                 <ul className="space-y-4 mb-12">
                   <li className="flex items-start gap-4">
                     <span className="font-label-mono text-label-mono text-tertiary mt-1">01</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Brand Positioning & Architecture</span>
+                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">WhatsApp Automation</span>
                   </li>
                   <li className="flex items-start gap-4">
                     <span className="font-label-mono text-label-mono text-tertiary mt-1">02</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Go-to-Market Strategy</span>
+                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Email Automations</span>
                   </li>
                   <li className="flex items-start gap-4">
                     <span className="font-label-mono text-label-mono text-tertiary mt-1">03</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Audience & Cultural Insights</span>
+                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">CRM Integrations</span>
                   </li>
                 </ul>
                 <Link className="inline-block font-label-mono text-label-mono border-2 border-on-surface px-8 py-4 uppercase hover:bg-tertiary hover:border-tertiary hover:text-on-tertiary transition-all duration-300" to="/contact">
@@ -100,11 +100,11 @@ export default function Services() {
       </section>
 
       {/* Identity Section */}
-      <section 
-        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap" 
+      <section
+        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap"
         id="identity"
       >
-        <div 
+        <div
           className="grid grid-cols-12 gap-gutter group"
           ref={ref1}
           onMouseMove={(e) => handleMouseMove(e, 1)}
@@ -149,11 +149,11 @@ export default function Services() {
       </section>
 
       {/* Development Section */}
-      <section 
-        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap" 
+      <section
+        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap"
         id="development"
       >
-        <div 
+        <div
           className="grid grid-cols-12 gap-gutter group"
           ref={ref2}
           onMouseMove={(e) => handleMouseMove(e, 2)}
@@ -201,7 +201,7 @@ export default function Services() {
       <section className="bg-surface-container-low py-section-gap px-margin-desktop border-y border-outline-variant">
         <div className="max-w-[1440px] mx-auto text-center">
           <span className="font-label-mono text-label-mono text-tertiary uppercase tracking-[0.3em] mb-6 block">Ready to elevate?</span>
-          <h2 className="font-headline-lg text-headline-lg mb-12">Let's build something <br className="hidden md:block"/> that matters.</h2>
+          <h2 className="font-headline-lg text-headline-lg mb-12">Let's build something <br className="hidden md:block" /> that matters.</h2>
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
             <a className="font-headline-md text-headline-md font-bold underline decoration-tertiary decoration-4 underline-offset-8 hover:text-tertiary transition-colors" href="mailto:hello@perspec.agency">hello@perspec.agency</a>
             <span className="hidden md:block font-headline-md text-headline-md opacity-20">/</span>

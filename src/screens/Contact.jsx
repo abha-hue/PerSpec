@@ -3,7 +3,7 @@ import { useState } from 'react';
 export default function Contact() {
   const [focusedField, setFocusedField] = useState(null);
 
-  const getLabelClass = (fieldName) => 
+  const getLabelClass = (fieldName) =>
     `font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest block mb-4 transition-colors duration-300 ${focusedField === fieldName ? 'text-tertiary' : ''}`;
 
   return (
@@ -17,9 +17,8 @@ export default function Contact() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-tertiary/5 rounded-full blur-[120px]"></div>
         </div>
         <div className="relative z-10 px-margin-mobile md:px-margin-desktop w-full max-w-[1440px]">
-          <span className="font-label-mono text-label-mono text-tertiary uppercase tracking-[0.4em] block mb-8 animate-pulse">Available for Q4 2024</span>
           <h1 className="font-display-hero text-[64px] md:text-[160px] leading-[0.9] tracking-tighter hero-text-shadow">
-            Let's build the <br/>
+            Let's build the <br />
             <span className="italic font-light text-outline">unconventional.</span>
           </h1>
           <div className="mt-12 flex items-center gap-8">
@@ -36,46 +35,46 @@ export default function Contact() {
       {/* Inquiry & Contact Grid */}
       <section className="bg-background py-section-gap px-margin-mobile md:px-margin-desktop">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-section-gap lg:gap-gutter">
-          
+
           {/* Left Side: Architectural Form */}
           <div className="lg:col-span-7">
             <div className="mb-16">
               <h2 className="font-headline-lg text-headline-lg mb-4">New Inquiry</h2>
               <div className="h-1 w-20 bg-tertiary"></div>
             </div>
-            
+
             <form className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16" onSubmit={(e) => e.preventDefault()}>
               <div className="relative group">
                 <label className={getLabelClass('name')} htmlFor="name">01. Identity</label>
-                <input 
-                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg transition-all placeholder:text-surface-variant/40 outline-none" 
-                  id="name" 
-                  name="name" 
-                  placeholder="Name or Company" 
+                <input
+                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg transition-all placeholder:text-surface-variant/40 outline-none"
+                  id="name"
+                  name="name"
+                  placeholder="Name or Company"
                   type="text"
                   onFocus={() => setFocusedField('name')}
                   onBlur={() => setFocusedField(null)}
                 />
               </div>
-              
+
               <div className="relative group">
                 <label className={getLabelClass('email')} htmlFor="email">02. Communication</label>
-                <input 
-                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg transition-all placeholder:text-surface-variant/40 outline-none" 
-                  id="email" 
-                  name="email" 
-                  placeholder="email@example.com" 
+                <input
+                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg transition-all placeholder:text-surface-variant/40 outline-none"
+                  id="email"
+                  name="email"
+                  placeholder="email@example.com"
                   type="email"
                   onFocus={() => setFocusedField('email')}
                   onBlur={() => setFocusedField(null)}
                 />
               </div>
-              
+
               <div className="relative group md:col-span-2">
                 <label className={getLabelClass('type')} htmlFor="type">03. Project Scope</label>
-                <select 
-                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg appearance-none cursor-pointer transition-all outline-none" 
-                  id="type" 
+                <select
+                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg appearance-none cursor-pointer transition-all outline-none"
+                  id="type"
                   name="type"
                   defaultValue=""
                   onFocus={() => setFocusedField('type')}
@@ -90,20 +89,20 @@ export default function Contact() {
                   <span className="material-symbols-outlined">expand_more</span>
                 </div>
               </div>
-              
+
               <div className="relative group md:col-span-2">
                 <label className={getLabelClass('message')} htmlFor="message">04. The Vision</label>
-                <textarea 
-                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg transition-all placeholder:text-surface-variant/40 resize-none outline-none" 
-                  id="message" 
-                  name="message" 
-                  placeholder="Describe the unconventional..." 
+                <textarea
+                  className="w-full bg-transparent border-0 border-b border-outline-variant focus:border-tertiary focus:ring-0 px-0 py-4 font-body-lg text-body-lg transition-all placeholder:text-surface-variant/40 resize-none outline-none"
+                  id="message"
+                  name="message"
+                  placeholder="Describe the unconventional..."
                   rows="3"
                   onFocus={() => setFocusedField('message')}
                   onBlur={() => setFocusedField(null)}
                 ></textarea>
               </div>
-              
+
               <div className="md:col-span-2 pt-8">
                 <button className="group inline-flex items-center gap-12 bg-on-background text-background px-12 py-8 font-headline-md text-headline-md hover:bg-tertiary hover:text-on-tertiary transition-all duration-500 overflow-hidden relative" type="submit">
                   <span className="relative z-10">Submit Inquiry</span>
@@ -112,7 +111,7 @@ export default function Contact() {
               </div>
             </form>
           </div>
-          
+
           {/* Right Side: Sophisticated Contact Details */}
           <div className="lg:col-span-4 lg:col-start-9 flex flex-col gap-24 border-l border-outline-variant pl-gutter">
             <div className="space-y-12">
@@ -125,12 +124,12 @@ export default function Contact() {
                 <a className="font-headline-md text-headline-md hover:text-tertiary transition-colors block" href="tel:+1234567890">+1 (234) 567 890</a>
               </div>
             </div>
-            
+
             <div className="space-y-8">
               <span className="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest block">Physical Base</span>
               <div className="p-8 border border-outline-variant hover:border-tertiary transition-colors group cursor-pointer">
                 <p className="font-body-lg text-body-lg mb-8 leading-relaxed">
-                  422 Minimalist Way, Suite 101<br/>
+                  422 Minimalist Way, Suite 101<br />
                   Creative District, NY 10012
                 </p>
                 <div className="flex items-center justify-between text-on-surface-variant">
@@ -139,7 +138,7 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <span className="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest block mb-8">Global Network</span>
               <div className="grid grid-cols-2 gap-4">
