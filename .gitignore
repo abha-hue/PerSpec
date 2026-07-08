@@ -32,3 +32,4 @@ fetch_stitch.mjs
 fetch_contact.mjs
 download_assets.mjs
 download_bg.mjs
+.env

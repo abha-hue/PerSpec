@@ -1,13 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
   const [focusedField, setFocusedField] = useState(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      // 1. Hero Entrance Reveal
+      gsap.fromTo(".contact-hero-animate", 
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" }
+      );
+
+      // 2. Form & Side Contact Info Staggered Reveal on Scroll
+      gsap.fromTo(".contact-grid-animate",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".contact-grid-section",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const getLabelClass = (fieldName) =>
     `font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest block mb-4 transition-colors duration-300 ${focusedField === fieldName ? 'text-tertiary' : ''}`;
 
   return (
-    <main>
+    <main ref={containerRef}>
       {/* Immersive Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-black">
         <div className="absolute inset-0 noise-bg"></div>
@@ -17,11 +51,11 @@ export default function Contact() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-tertiary/5 rounded-full blur-[120px]"></div>
         </div>
         <div className="relative z-10 px-margin-mobile md:px-margin-desktop w-full max-w-[1440px]">
-          <h1 className="font-display-hero text-[64px] md:text-[160px] leading-[0.9] tracking-tighter hero-text-shadow">
+          <h1 className="font-display-hero text-[64px] md:text-[160px] leading-[0.9] tracking-tighter hero-text-shadow contact-hero-animate">
             Let's build the <br />
             <span className="italic font-light text-outline">unconventional.</span>
           </h1>
-          <div className="mt-12 flex items-center gap-8">
+          <div className="mt-12 flex items-center gap-8 contact-hero-animate">
             <div className="h-px w-24 bg-tertiary"></div>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-md">Transforming bold ideas into architectural digital experiences. Your inquiry starts here.</p>
           </div>
@@ -33,11 +67,11 @@ export default function Contact() {
       </section>
 
       {/* Inquiry & Contact Grid */}
-      <section className="bg-background py-section-gap px-margin-mobile md:px-margin-desktop">
+      <section className="bg-background py-section-gap px-margin-mobile md:px-margin-desktop contact-grid-section">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-section-gap lg:gap-gutter">
 
           {/* Left Side: Architectural Form */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 contact-grid-animate">
             <div className="mb-16">
               <h2 className="font-headline-lg text-headline-lg mb-4">New Inquiry</h2>
               <div className="h-1 w-20 bg-tertiary"></div>
@@ -113,7 +147,7 @@ export default function Contact() {
           </div>
 
           {/* Right Side: Sophisticated Contact Details */}
-          <div className="lg:col-span-4 lg:col-start-9 flex flex-col gap-24 border-l border-outline-variant pl-gutter">
+          <div className="lg:col-span-4 lg:col-start-9 flex flex-col gap-24 border-l border-outline-variant pl-gutter contact-grid-animate">
             <div className="space-y-12">
               <div>
                 <span className="font-label-mono text-label-mono text-tertiary uppercase tracking-widest block mb-6">Electronic Mail</span>

@@ -1,14 +1,52 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import image10 from '../assets/image10.jpg';
-import image11 from '../assets/image11.jpg';
-import image12 from '../assets/image12.jpg';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import image10 from '../assets/image10.webp';
+import image11 from '../assets/image11.webp';
+import image12 from '../assets/image12.webp';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Services() {
   const ref0 = useRef(null);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const sectionRefs = [ref0, ref1, ref2];
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
+      const panels = gsap.utils.toArray('.service-panel');
+      const container = containerRef.current.querySelector('.services-stack-container');
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top 100px",
+          end: () => `+=${window.innerHeight * (panels.length - 1)}`,
+          pin: true,
+          scrub: true,
+          invalidateOnRefresh: true,
+        }
+      });
+
+      panels.forEach((panel, i) => {
+        if (i === 0) return;
+        tl.fromTo(panel, 
+          { yPercent: 100 },
+          { yPercent: 0, ease: "none" },
+          i - 1
+        );
+      });
+    });
+
+    return () => {
+      mm.revert();
+    };
+  }, []);
 
   const handleMouseMove = (e, index) => {
     const section = sectionRefs[index].current;
@@ -31,9 +69,9 @@ export default function Services() {
   };
 
   return (
-    <main className="pt-20">
+    <main className="pt-20" ref={containerRef}>
       {/* Hero Section */}
-      <section className="min-h-[70vh] flex flex-col justify-center px-margin-mobile lg:px-margin-desktop py-12 max-w-[1440px] mx-auto w-full">
+      <section className="min-h-[70vh] flex flex-col justify-center px-margin-mobile lg:px-margin-desktop py-12 max-w-[1440px] mx-auto w-full relative z-0 bg-background">
         <span className="font-label-mono text-label-mono text-outline block mb-8 uppercase tracking-widest">
           Capabilities
         </span>
@@ -50,155 +88,161 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Automation Section */}
-      <section
-        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap"
-        id="automation"
-      >
-        <div
-          className="grid grid-cols-12 gap-gutter group"
-          ref={ref0}
-          onMouseMove={(e) => handleMouseMove(e, 0)}
-          onMouseLeave={() => handleMouseLeave(0)}
+      {/* Services Stack Container */}
+      <div className="services-stack-container relative w-full lg:h-[calc(100vh-100px)] overflow-hidden bg-background">
+        {/* Automation Section */}
+        <section
+          className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap lg:mb-0 service-panel lg:absolute lg:inset-0 lg:h-full lg:w-full lg:flex lg:items-center relative bg-background"
+          style={{ zIndex: 1 }}
+          id="automation"
         >
-          <div className="col-span-12 lg:col-start-2 lg:col-span-10 border-t border-outline-variant pt-12">
-            <div className="flex flex-col md:flex-row justify-between gap-12">
-              <div className="md:w-1/2">
-                <div className="flex items-center gap-4 mb-8">
-                  <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
-                  <h2 className="font-headline-lg text-headline-lg">Automation</h2>
+          <div
+            className="grid grid-cols-12 gap-gutter group w-full"
+            ref={ref0}
+            onMouseMove={(e) => handleMouseMove(e, 0)}
+            onMouseLeave={() => handleMouseLeave(0)}
+          >
+            <div className="col-span-12 lg:col-start-2 lg:col-span-10 border-t border-outline-variant pt-12">
+              <div className="flex flex-col md:flex-row justify-between gap-12 bg-background">
+                <div className="md:w-1/2">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                    <h2 className="font-headline-lg text-headline-lg">Automation</h2>
+                  </div>
+                  <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
+                    Streamline your workflows and engage customers automatically. We design smart, scalable automation systems across messaging, email, and CRM that save time and drive conversions.
+                  </p>
+                  <ul className="space-y-4 mb-12">
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">01</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">WhatsApp Automation</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">02</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Email Automations</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">03</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">CRM Integrations</span>
+                    </li>
+                  </ul>
+                  <Link className="inline-block font-label-mono text-label-mono border-2 border-on-surface px-8 py-4 uppercase hover:bg-tertiary hover:border-tertiary hover:text-on-tertiary transition-all duration-300" to="/contact">
+                    Work with us
+                  </Link>
                 </div>
-                <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
-                  Streamline your workflows and engage customers automatically. We design smart, scalable automation systems across messaging, email, and CRM that save time and drive conversions.
-                </p>
-                <ul className="space-y-4 mb-12">
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">01</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">WhatsApp Automation</span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">02</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Email Automations</span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">03</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">CRM Integrations</span>
-                  </li>
-                </ul>
-                <Link className="inline-block font-label-mono text-label-mono border-2 border-on-surface px-8 py-4 uppercase hover:bg-tertiary hover:border-tertiary hover:text-on-tertiary transition-all duration-300" to="/contact">
-                  Work with us
-                </Link>
-              </div>
-              <div className="md:w-1/3 flex items-center justify-center">
-                <div className="w-full aspect-square border border-outline-variant p-4 grayscale group-hover:grayscale-0 transition-all duration-700">
-                  <div className="w-full h-full bg-cover bg-center transition-transform duration-300 ease-out" style={{ backgroundImage: `url(${image10})` }}></div>
+                <div className="md:w-1/3 flex items-center justify-center bg-background">
+                  <div className="w-full aspect-square border border-outline-variant p-4 grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div className="w-full h-full bg-cover bg-center transition-transform duration-300 ease-out" style={{ backgroundImage: `url(${image10})` }}></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Identity Section */}
-      <section
-        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap"
-        id="identity"
-      >
-        <div
-          className="grid grid-cols-12 gap-gutter group"
-          ref={ref1}
-          onMouseMove={(e) => handleMouseMove(e, 1)}
-          onMouseLeave={() => handleMouseLeave(1)}
+        {/* Identity Section */}
+        <section
+          className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap lg:mb-0 service-panel lg:absolute lg:inset-0 lg:h-full lg:w-full lg:flex lg:items-center relative bg-background"
+          style={{ zIndex: 2 }}
+          id="identity"
         >
-          <div className="col-span-12 lg:col-start-2 lg:col-span-10 border-t border-outline-variant pt-12">
-            <div className="flex flex-col md:flex-row-reverse justify-between gap-12">
-              <div className="md:w-1/2">
-                <div className="flex items-center gap-4 mb-8">
-                  <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>token</span>
-                  <h2 className="font-headline-lg text-headline-lg">Identity</h2>
+          <div
+            className="grid grid-cols-12 gap-gutter group w-full"
+            ref={ref1}
+            onMouseMove={(e) => handleMouseMove(e, 1)}
+            onMouseLeave={() => handleMouseLeave(1)}
+          >
+            <div className="col-span-12 lg:col-start-2 lg:col-span-10 border-t border-outline-variant pt-12">
+              <div className="flex flex-col md:flex-row-reverse justify-between gap-12 bg-background">
+                <div className="md:w-1/2">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>token</span>
+                    <h2 className="font-headline-lg text-headline-lg">Identity</h2>
+                  </div>
+                  <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
+                    Visual and verbal systems designed to scale. We create rigorous design systems—typography, color theory, grid structures, and tone of voice—that ensure absolute consistency across every medium.
+                  </p>
+                  <ul className="space-y-4 mb-12">
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">04</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Visual Identity Systems</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">05</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Verbal Identity & Messaging</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">06</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Art Direction & Photography</span>
+                    </li>
+                  </ul>
+                  <Link className="inline-block font-label-mono text-label-mono border-2 border-on-surface px-8 py-4 uppercase hover:bg-tertiary hover:border-tertiary hover:text-on-tertiary transition-all duration-300" to="/contact">
+                    Work with us
+                  </Link>
                 </div>
-                <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
-                  Visual and verbal systems designed to scale. We create rigorous design systems—typography, color theory, grid structures, and tone of voice—that ensure absolute consistency across every medium.
-                </p>
-                <ul className="space-y-4 mb-12">
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">04</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Visual Identity Systems</span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">05</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Verbal Identity & Messaging</span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">06</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Art Direction & Photography</span>
-                  </li>
-                </ul>
-                <Link className="inline-block font-label-mono text-label-mono border-2 border-on-surface px-8 py-4 uppercase hover:bg-tertiary hover:border-tertiary hover:text-on-tertiary transition-all duration-300" to="/contact">
-                  Work with us
-                </Link>
-              </div>
-              <div className="md:w-1/3 flex items-center justify-center">
-                <div className="w-full aspect-square border border-outline-variant p-4 grayscale group-hover:grayscale-0 transition-all duration-700">
-                  <div className="w-full h-full bg-cover bg-center transition-transform duration-300 ease-out" style={{ backgroundImage: `url(${image11})` }}></div>
+                <div className="md:w-1/3 flex items-center justify-center bg-background">
+                  <div className="w-full aspect-square border border-outline-variant p-4 grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div className="w-full h-full bg-cover bg-center transition-transform duration-300 ease-out" style={{ backgroundImage: `url(${image11})` }}></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Development Section */}
-      <section
-        className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap"
-        id="development"
-      >
-        <div
-          className="grid grid-cols-12 gap-gutter group"
-          ref={ref2}
-          onMouseMove={(e) => handleMouseMove(e, 2)}
-          onMouseLeave={() => handleMouseLeave(2)}
+        {/* Development Section */}
+        <section
+          className="px-margin-desktop max-w-[1440px] mx-auto mb-section-gap lg:mb-0 service-panel lg:absolute lg:inset-0 lg:h-full lg:w-full lg:flex lg:items-center relative bg-background"
+          style={{ zIndex: 3 }}
+          id="development"
         >
-          <div className="col-span-12 lg:col-start-2 lg:col-span-10 border-t border-outline-variant pt-12">
-            <div className="flex flex-col md:flex-row justify-between gap-12">
-              <div className="md:w-1/2">
-                <div className="flex items-center gap-4 mb-8">
-                  <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>terminal</span>
-                  <h2 className="font-headline-lg text-headline-lg">Development</h2>
+          <div
+            className="grid grid-cols-12 gap-gutter group w-full"
+            ref={ref2}
+            onMouseMove={(e) => handleMouseMove(e, 2)}
+            onMouseLeave={() => handleMouseLeave(2)}
+          >
+            <div className="col-span-12 lg:col-start-2 lg:col-span-10 border-t border-outline-variant pt-12">
+              <div className="flex flex-col md:flex-row justify-between gap-12 bg-background">
+                <div className="md:w-1/2">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="material-symbols-outlined text-tertiary text-4xl service-icon transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 1" }}>terminal</span>
+                    <h2 className="font-headline-lg text-headline-lg">Development</h2>
+                  </div>
+                  <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
+                    We write clean, performant code that brings vision to life without compromise. From custom web applications to interactive experiences, our tech stack is chosen for speed and longevity.
+                  </p>
+                  <ul className="space-y-4 mb-12">
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">07</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Headless CMS &amp; React Apps</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">08</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Complex Animation &amp; WebGL</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="font-label-mono text-label-mono text-tertiary mt-1">09</span>
+                      <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">E-commerce Infrastructures</span>
+                    </li>
+                  </ul>
+                  <Link className="inline-block font-label-mono text-label-mono border-2 border-on-surface px-8 py-4 uppercase hover:bg-tertiary hover:border-tertiary hover:text-on-tertiary transition-all duration-300" to="/contact">
+                    Work with us
+                  </Link>
                 </div>
-                <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
-                  We write clean, performant code that brings vision to life without compromise. From custom web applications to interactive experiences, our tech stack is chosen for speed and longevity.
-                </p>
-                <ul className="space-y-4 mb-12">
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">07</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Headless CMS &amp; React Apps</span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">08</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">Complex Animation &amp; WebGL</span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <span className="font-label-mono text-label-mono text-tertiary mt-1">09</span>
-                    <span className="font-body-md text-body-md border-b border-transparent hover:border-tertiary cursor-default transition-all">E-commerce Infrastructures</span>
-                  </li>
-                </ul>
-                <Link className="inline-block font-label-mono text-label-mono border-2 border-on-surface px-8 py-4 uppercase hover:bg-tertiary hover:border-tertiary hover:text-on-tertiary transition-all duration-300" to="/contact">
-                  Work with us
-                </Link>
-              </div>
-              <div className="md:w-1/3 flex items-center justify-center">
-                <div className="w-full aspect-square border border-outline-variant p-4 grayscale group-hover:grayscale-0 transition-all duration-700">
-                  <div className="w-full h-full bg-cover bg-center transition-transform duration-300 ease-out" style={{ backgroundImage: `url(${image12})` }}></div>
+                <div className="md:w-1/3 flex items-center justify-center bg-background">
+                  <div className="w-full aspect-square border border-outline-variant p-4 grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div className="w-full h-full bg-cover bg-center transition-transform duration-300 ease-out" style={{ backgroundImage: `url(${image12})` }}></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Final Call to Action */}
-      <section className="bg-surface-container-low py-section-gap px-margin-desktop border-y border-outline-variant">
+      <section className="bg-surface-container-low py-section-gap px-margin-desktop border-y border-outline-variant relative" style={{ zIndex: 4 }}>
         <div className="max-w-[1440px] mx-auto text-center">
           <span className="font-label-mono text-label-mono text-tertiary uppercase tracking-[0.3em] mb-6 block">Ready to elevate?</span>
           <h2 className="font-headline-lg text-headline-lg mb-12">Let's build something <br className="hidden md:block" /> that matters.</h2>

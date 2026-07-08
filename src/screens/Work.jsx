@@ -1,32 +1,93 @@
-import { useEffect, useState } from 'react';
-import image4 from '../assets/image4.jpg';
-import image5 from '../assets/image5.jpg';
-import image6 from '../assets/image6.jpg';
-import image7 from '../assets/image7.jpg';
-import image8 from '../assets/image8.jpg';
-import image9 from '../assets/image9.jpg';
+import { useEffect, useState, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import image4 from '../assets/image4.webp';
+import image5 from '../assets/image5.webp';
+import image6 from '../assets/image6.webp';
+import image7 from '../assets/image7.webp';
+import image8 from '../assets/image8.webp';
+import image9 from '../assets/image9.webp';
 import Ticker from '../components/Ticker';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Work() {
   const [filter, setFilter] = useState('All Projects');
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const cards = document.querySelectorAll('.project-card img');
-      cards.forEach(img => {
-        const scrollPos = window.pageYOffset;
-        const offsetTop = img.parentElement.offsetTop;
-        const diff = scrollPos - offsetTop;
-        if (window.innerWidth > 768) {
-          img.style.transform = `translateY(${diff * 0.05}px) scale(1.1)`;
-        } else {
-          img.style.transform = `translateY(0px) scale(1.0)`;
-        }
-      });
-    };
+    let ctx = gsap.context(() => {
+      // 1. Hero Title Reveal
+      gsap.fromTo(".work-hero-animate", 
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" }
+      );
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+      // 2. Project Cards Reveal and Parallax
+      let mm = gsap.matchMedia();
+      mm.add("(min-width: 768px)", () => {
+        const cards = gsap.utils.toArray('.project-card');
+        cards.forEach((card) => {
+          // Entrance reveal
+          gsap.fromTo(card,
+            { y: 60, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 90%",
+                toggleActions: "play none none reverse",
+              }
+            }
+          );
+
+          // Smooth image parallax
+          const img = card.querySelector('img');
+          if (img) {
+            gsap.fromTo(img, 
+              { yPercent: -10, scale: 1.1 },
+              {
+                yPercent: 10,
+                scale: 1.1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                }
+              }
+            );
+          }
+        });
+      });
+
+      // Mobile cards entrance reveal only (no parallax)
+      mm.add("(max-width: 767px)", () => {
+        const cards = gsap.utils.toArray('.project-card');
+        cards.forEach((card) => {
+          gsap.fromTo(card,
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 95%",
+                toggleActions: "play none none reverse",
+              }
+            }
+          );
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   const handleMouseEnterCta = () => {
@@ -50,13 +111,13 @@ export default function Work() {
   }, []);
 
   return (
-    <main className="pt-40 transition-colors duration-500">
+    <main className="pt-40 transition-colors duration-500" ref={containerRef}>
       {/* Hero Section */}
       <section className="px-margin-desktop max-w-[1440px] mx-auto mb-24">
         <div className="grid grid-cols-12 gap-gutter">
           <div className="col-start-1 col-span-12 md:col-span-8">
-            <h1 className="font-display-hero text-display-hero mb-8 uppercase">Selected<br/>Work</h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+            <h1 className="font-display-hero text-display-hero mb-8 uppercase work-hero-animate">Selected<br/>Work</h1>
+            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl work-hero-animate">
               A curated collection of strategic design and digital solutions that helped our partners redefine their industries.
             </p>
           </div>
